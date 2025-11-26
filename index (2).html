@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Материалы по английскому языку — витрина учителя</title>
+
+    <!-- Базовые стили страницы -->
+    <style>
+        /* ===== Общие стили ===== */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: #f5f7fb;
+            color: #222;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        /* ===== Шапка сайта ===== */
+        header {
+            background: #1e3a8a;
+            color: #fff;
+            padding: 20px 0 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        header .top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        header p.subtitle {
+            margin: 4px 0 0;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .teacher-info {
+            text-align: right;
+            font-size: 14px;
+        }
+
+        /* ===== Блок-приветствие ===== */
+        .hero {
+            padding: 24px 0 8px;
+        }
+
+        .hero-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 14px rgba(15,23,42,0.08);
+        }
+
+        .hero-title {
+            font-size: 20px;
+            margin: 0 0 8px;
+        }
+
+        .hero-text {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* ===== Витрина товаров ===== */
+        .products-section {
+            padding: 8px 0 40px;
+        }
+
+        .products-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .products-title {
+            font-size: 20px;
+            margin: 0;
+        }
+
+        .products-note {
+            font-size: 13px;
+            color: #555;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(15,23,42,0.06);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-image-wrapper {
+            position: relative;
+            overflow: hidden;
+            height: 180px;
+            background: #e5e7eb;
+        }
+
+        .product-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-body {
+            padding: 14px 14px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex-grow: 1;
+        }
+
+        .product-title {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .product-short {
+            margin: 0;
+            font-size: 13px;
+            color: #555;
+        }
+
+        .product-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 4px;
+        }
+
+        .rating {
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .rating-stars {
+            color: #fbbf24; /* жёлтые звёздочки */
+        }
+
+        .rating-value {
+            color: #555;
+        }
+
+        .price {
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .product-actions {
+            padding: 0 14px 14px;
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .btn {
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 999px;
+            padding: 8px 14px;
+            transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: #1d4ed8;
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(37,99,235,0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #1d4ed8;
+            border: 1px solid rgba(37,99,235,0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 10px rgba(15,23,42,0.2);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+
+        /* ===== Модальное окно ===== */
+        .modal {
+            position: fixed;
+            inset: 0;
+            display: none; /* изначально скрыто */
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+        }
+
+        .modal.open {
+            display: flex;
+        }
+
+        .modal-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(15,23,42,0.6);
+        }
+
+        .modal-content {
+            position: relative;
+            background: #fff;
+            border-radius: 16px;
+            max-width: 900px;
+            width: 100%;
+            margin: 16px;
+            padding: 18px 18px 20px;
+            box-shadow: 0 18px 45px rgba(15,23,42,0.5);
+            display: flex;
+            flex-direction: column;
+            z-index: 1;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            border: none;
+            background: transparent;
+            font-size: 20px;
+            cursor: pointer;
+            color: #6b7280;
+        }
+
+        .modal-body {
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+            gap: 18px;
+            align-items: stretch;
+        }
+
+        /* Карусель с картинками */
+        .carousel {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #e5e7eb;
+            height: 320px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: rgba(15,23,42,0.55);
+            color: #fff;
+            width: 30px;
+            height: 30px;
+            border-radius: 999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .carousel-arrow.left {
+            left: 10px;
+        }
+
+        .carousel-arrow.right {
+            right: 10px;
+        }
+
+        .carousel-dots {
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 6px;
+        }
+
+        .carousel-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.6);
+            cursor: pointer;
+        }
+
+        .carousel-dot.active {
+            background: #fff;
+        }
+
+        /* Информация о товаре в модалке */
+        .modal-info-title {
+            margin: 0 0 6px;
+            font-size: 20px;
+        }
+
+        .modal-rating {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            margin-bottom: 6px;
+            color: #555;
+        }
+
+        .modal-description {
+            font-size: 14px;
+            line-height: 1.6;
+            margin: 0 0 10px;
+        }
+
+        .modal-price {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .modal-footer-small {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        /* ===== Подвал ===== */
+        footer {
+            border-top: 1px solid #e5e7eb;
+            padding: 14px 0 20px;
+            font-size: 12px;
+            color: #6b7280;
+            text-align: center;
+        }
+
+        /* ===== Адаптивность ===== */
+        @media (max-width: 768px) {
+            header .top-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .teacher-info {
+                text-align: left;
+            }
+
+            .modal-body {
+                grid-template-columns: 1fr;
+            }
+
+            .carousel {
+                height: 260px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <div class="top-row">
+            <div>
+                <!-- Здесь можно поменять имя и позиционирование -->
+                <h1>Авторские материалы по английскому языку</h1>
+                <p class="subtitle">Готовые разработки для уроков, кружков и онлайн-занятий</p>
+            </div>
+            <div class="teacher-info">
+                <!-- Здесь укажите свои данные -->
+                <div><strong>Имя учителя</strong> — Teacher of English</div>
+                <div>Опыт: 10+ лет преподавания</div>
+                <div>E-mail: youremail@example.com</div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="container">
+
+    <!-- Блок-приветствие. Можете заменить текст под себя -->
+    <section class="hero">
+        <div class="hero-card">
+            <h2 class="hero-title">Материалы, которые экономят ваше время и нравятся детям</h2>
+            <p class="hero-text">
+                Все разработки представлены на английском языке с готовыми заданиями, ключами и рекомендациями для учителя.
+                Выбирайте нужный уровень и формат, а ссылки на оплату и скачивание вы настроите самостоятельно.
+            </p>
+        </div>
+    </section>
+
+    <!-- Витрина товаров -->
+    <section class="products-section">
+        <div class="products-header">
+            <h2 class="products-title">Готовые разработки</h2>
+            <p class="products-note">
+                Нажмите «Купить», чтобы открыть подробное описание и слайды материала.
+            </p>
+        </div>
+
+        <div class="products-grid">
+            <!-- ===== Пример карточки товара №1 =====
+                 ПОДСКАЗКА: скопируйте блок .product-card и замените данные для своих товаров
+                 data-images — список картинок через запятую для карусели в модальном окне -->
+            <article
+                class="product-card"
+                data-title="Speaking Bundle: Daily Topics (A2–B1)"
+                data-description="Набор из 15 говорительных уроков на повседневные темы (hobbies, food, school, future plans). В каждом занятии: вопросы для обсуждения, лексика, образцы ответов и задания для парной работы. Подходит для подростков и взрослых уровней A2–B1."
+                data-price="990"
+                data-rating="4.9"
+                data-rating-count="128"
+                data-images="img/speaking-bundle-1.jpg,img/speaking-bundle-2.jpg,img/speaking-bundle-3.jpg"
+                data-buy-link="#"
+            >
+                <div class="product-image-wrapper">
+                    <!-- Замените src на обложку своего материала -->
+                    <img src="img/speaking-bundle-1.jpg" alt="Speaking Bundle: Daily Topics (A2–B1)">
+                </div>
+                <div class="product-body">
+                    <h3 class="product-title">Speaking Bundle: Daily Topics (A2–B1)</h3>
+                    <p class="product-short">
+                        15 готовых уроков говорения для подростков и взрослых, ключи и идеи для онлайн-формата.
+                    </p>
+                    <div class="product-meta">
+                        <div class="rating">
+                            <span class="rating-stars">★★★★★</span>
+                            <span class="rating-value">4.9 · 128 отзывов</span>
+                        </div>
+                        <div class="price">990 ₽</div>
+                    </div>
+                </div>
+                <div class="product-actions">
+                    <!-- Кнопка подробнее — можете менять текст или скрыть -->
+                    <button class="btn btn-outline btn-details" type="button">
+                        Подробнее
+                    </button>
+                    <!-- Кнопка купить открывает модальное окно -->
+                    <button class="btn btn-primary btn-buy" type="button">
+                        Купить
+                    </button>
+                </div>
+            </article>
+
+            <!-- ===== Пример карточки товара №2 ===== -->
+            <article
+                class="product-card"
+                data-title="Grammar Worksheets: Tenses (B1)"
+                data-description="30 рабочих листов по временам английского языка (Present, Past и Future Tenses) с ключами для самопроверки. Форматы заданий: gap-fill, sentence transformation, error correction, mini-tests. Можно использовать как на уроках, так и для домашней работы."
+                data-price="750"
+                data-rating="4.8"
+                data-rating-count="94"
+                data-images="img/grammar-tenses-1.jpg,img/grammar-tenses-2.jpg"
+                data-buy-link="#"
+            >
+                <div class="product-image-wrapper">
+                    <img src="img/grammar-tenses-1.jpg" alt="Grammar Worksheets: Tenses (B1)">
+                </div>
+                <div class="product-body">
+                    <h3 class="product-title">Grammar Worksheets: Tenses (B1)</h3>
+                    <p class="product-short">
+                        30 рабочих листов по временам с ключами. Подходят для экзамен-ориентированных занятий.
+                    </p>
+                    <div class="product-meta">
+                        <div class="rating">
+                            <span class="rating-stars">★★★★☆</span>
+                            <span class="rating-value">4.8 · 94 отзыва</span>
+                        </div>
+                        <div class="price">750 ₽</div>
+                    </div>
+                </div>
+                <div class="product-actions">
+                    <button class="btn btn-outline btn-details" type="button">
+                        Подробнее
+                    </button>
+                    <button class="btn btn-primary btn-buy" type="button">
+                        Купить
+                    </button>
+                </div>
+            </article>
+
+            <!-- ===== Пример карточки товара №3 ===== -->
+            <article
+                class="product-card"
+                data-title="Project Pack: Eco Problems (B1–B2)"
+                data-description="Проектный модуль по теме ecological problems. Внутри: тексты для чтения, видеоподсказки, карточки лексики, шаблоны плакатов и презентаций. Ученики создают собственные мини-проекты и выступают с презентациями. Идеально для тематической недели или открытых уроков."
+                data-price="1200"
+                data-rating="5.0"
+                data-rating-count="57"
+                data-images="img/eco-project-1.jpg,img/eco-project-2.jpg,img/eco-project-3.jpg,img/eco-project-4.jpg"
+                data-buy-link="#"
+            >
+                <div class="product-image-wrapper">
+                    <img src="img/eco-project-1.jpg" alt="Project Pack: Eco Problems (B1–B2)">
+                </div>
+                <div class="product-body">
+                    <h3 class="product-title">Project Pack: Eco Problems (B1–B2)</h3>
+                    <p class="product-short">
+                        Полный набор для проектной работы по теме ecological problems с шаблонами и идеями презентаций.
+                    </p>
+                    <div class="product-meta">
+                        <div class="rating">
+                            <span class="rating-stars">★★★★★</span>
+                            <span class="rating-value">5.0 · 57 отзывов</span>
+                        </div>
+                        <div class="price">1 200 ₽</div>
+                    </div>
+                </div>
+                <div class="product-actions">
+                    <button class="btn btn-outline btn-details" type="button">
+                        Подробнее
+                    </button>
+                    <button class="btn btn-primary btn-buy" type="button">
+                        Купить
+                    </button>
+                </div>
+            </article>
+        </div>
+    </section>
+</main>
+
+<!-- ===== Модальное окно с карточкой товара ===== -->
+<div class="modal" id="productModal" aria-hidden="true">
+    <div class="modal-overlay"></div>
+    <div class="modal-content" role="dialog" aria-modal="true">
+        <button class="modal-close" type="button" aria-label="Закрыть">×</button>
+        <div class="modal-body">
+            <!-- Левая часть: карусель картинок -->
+            <div class="carousel" id="modalCarousel">
+                <!-- Слайд с картинкой будет подставляться скриптом -->
+                <button class="carousel-arrow left" type="button" id="carouselPrev">‹</button>
+                <button class="carousel-arrow right" type="button" id="carouselNext">›</button>
+                <div class="carousel-dots" id="carouselDots"></div>
+            </div>
+
+            <!-- Правая часть: описание товара -->
+            <div class="modal-info">
+                <h3 class="modal-info-title" id="modalTitle">Название товара</h3>
+                <div class="modal-rating">
+                    <span id="modalRatingStars">★★★★★</span>
+                    <span id="modalRatingValue">4.9 · 100 отзывов</span>
+                </div>
+                <p class="modal-description" id="modalDescription">
+                    Здесь будет подробное описание товара, которое берётся из атрибута data-description карточки.
+                </p>
+                <div class="modal-price" id="modalPrice">0 ₽</div>
+
+                <div class="modal-footer">
+                    <!-- ЭТУ ССЫЛКУ ВЫ НАСТРОИТЕ САМОСТОЯТЕЛЬНО: -->
+                    <!-- в data-buy-link карточки укажите ссылку на оплату/магазин -->
+                    <a href="#" class="btn btn-primary" id="modalBuyLink" target="_blank" rel="noopener noreferrer">
+                        Перейти к оплате
+                    </a>
+                    <span class="modal-footer-small">
+                        После оплаты вы сможете отправить материалы ученикам или использовать на своих занятиях.
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        © 2025 · Ваше имя, учитель английского языка.
+        Все материалы защищены авторским правом.
+    </div>
+</footer>
+
+<!-- ===== Скрипт для работы модального окна и карусели ===== -->
+<script>
+    // Находим элементы модального окна
+    const modal = document.getElementById('productModal');
+    const modalOverlay = modal.querySelector('.modal-overlay');
+    const modalCloseBtn = modal.querySelector('.modal-close');
+
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDescription = document.getElementById('modalDescription');
+    const modalPrice = document.getElementById('modalPrice');
+    const modalRatingStars = document.getElementById('modalRatingStars');
+    const modalRatingValue = document.getElementById('modalRatingValue');
+    const modalBuyLink = document.getElementById('modalBuyLink');
+
+    const carousel = document.getElementById('modalCarousel');
+    const carouselPrevBtn = document.getElementById('carouselPrev');
+    const carouselNextBtn = document.getElementById('carouselNext');
+    const carouselDotsContainer = document.getElementById('carouselDots');
+
+    let currentSlideIndex = 0;
+    let currentImages = [];
+
+    /**
+     * Функция для открытия модального окна
+     */
+    function openModal() {
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden'; // блокируем прокрутку фона
+    }
+
+    /**
+     * Функция для закрытия модального окна
+     */
+    function closeModal() {
+        modal.classList.remove('open');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+
+    /**
+     * Отрисовка текущего слайда карусели
+     */
+    function renderCarouselSlide() {
+        // Удаляем старую картинку, если есть
+        const existingImg = carousel.querySelector('img.carousel-image');
+        if (existingImg) existingImg.remove();
+
+        if (!currentImages.length) return;
+
+        const img = document.createElement('img');
+        img.className = 'carousel-image';
+        img.src = currentImages[currentSlideIndex];
+        img.alt = modalTitle.textContent || 'Материал по английскому языку';
+        carousel.insertBefore(img, carouselPrevBtn); // вставляем картинку перед кнопками
+
+        // Обновляем точки (индикаторы)
+        Array.from(carouselDotsContainer.children).forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentSlideIndex);
+        });
+    }
+
+    /**
+     * Создаём точки для карусели по количеству картинок
+     */
+    function buildCarouselDots() {
+        carouselDotsContainer.innerHTML = '';
+
+        currentImages.forEach((_, index) => {
+            const dot = document.createElement('button');
+            dot.type = 'button';
+            dot.className = 'carousel-dot' + (index === 0 ? ' active' : '');
+            dot.addEventListener('click', () => {
+                currentSlideIndex = index;
+                renderCarouselSlide();
+            });
+            carouselDotsContainer.appendChild(dot);
+        });
+    }
+
+    /**
+     * Заполнение модального окна данными из карточки товара
+     * @param {HTMLElement} card
+     */
+    function fillModalFromCard(card) {
+        const title = card.dataset.title || card.querySelector('.product-title')?.textContent || '';
+        const description = card.dataset.description || card.querySelector('.product-short')?.textContent || '';
+        const price = card.dataset.price || '';
+        const rating = card.dataset.rating || '';
+        const ratingCount = card.dataset.ratingCount || '';
+        const buyLink = card.dataset.buyLink || '#';
+        const imagesAttr = card.dataset.images || '';
+
+        modalTitle.textContent = title;
+        modalDescription.textContent = description;
+        modalPrice.textContent = price ? `${Number(price).toLocaleString('ru-RU')} ₽` : '';
+        modalRatingStars.textContent = rating ? '★★★★★' : '';
+        modalRatingValue.textContent = rating ? `${rating} · ${ratingCount || 'отзывов'}` : '';
+        modalBuyLink.href = buyLink;
+
+        // Превращаем строку с картинками в массив
+        currentImages = imagesAttr
+            .split(',')
+            .map(str => str.trim())
+            .filter(Boolean);
+
+        currentSlideIndex = 0;
+        buildCarouselDots();
+        renderCarouselSlide();
+    }
+
+    // ===== Обработчики событий =====
+
+    // Клик по кнопке "Купить" или "Подробнее" в карточке товара
+    document.querySelectorAll('.product-card .btn-buy, .product-card .btn-details')
+        .forEach(button => {
+            button.addEventListener('click', event => {
+                const card = event.currentTarget.closest('.product-card');
+                if (!card) return;
+                fillModalFromCard(card);
+                openModal();
+            });
+        });
+
+    // Переключение слайдов вперёд/назад
+    carouselPrevBtn.addEventListener('click', () => {
+        if (!currentImages.length) return;
+        currentSlideIndex = (currentSlideIndex - 1 + currentImages.length) % currentImages.length;
+        renderCarouselSlide();
+    });
+
+    carouselNextBtn.addEventListener('click', () => {
+        if (!currentImages.length) return;
+        currentSlideIndex = (currentSlideIndex + 1) % currentImages.length;
+        renderCarouselSlide();
+    });
+
+    // Закрытие модального окна по крестику и клику по фону
+    modalCloseBtn.addEventListener('click', closeModal);
+    modalOverlay.addEventListener('click', closeModal);
+
+    // Закрытие по Esc
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape' && modal.classList.contains('open')) {
+            closeModal();
+        }
+    });
+</script>
+
+</body>
+</html>
